@@ -1,4 +1,6 @@
 import { database } from '../mongoDb.js';
+import choiceSchema from '../schemas/choiceSchema.js';
+import dayjs from 'dayjs';
 
 export async function choiceController(req, res) {
 
@@ -6,22 +8,25 @@ export async function choiceController(req, res) {
 
     try {
 
-    const choice = await database.collection('choices').findOne({ poolId });
+        const choice = await database.collection('choices').findOne({ poolId });
 
-    if (!choice) {
+        if (choice) {
 
-        console.log(choice);
-        return res.sendStatus(404);
+            console.log(choice);
+            return res.sendStatus(404);
 
-    }
+        }
 
-/*     if (expiredAt) {
+        /* if (title === ) */
 
-        res.sendStatus(403);
 
-    } */
+        if (dayjs().isAfter(expireAt.date)) {
 
-    res.sendStatus(201);
+            return res.sendStatus(403);
+
+        }
+
+        res.sendStatus(201);
 
     } catch (e) {
 

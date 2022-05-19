@@ -1,6 +1,6 @@
 import { database } from '../mongoDb';
 
-export async function poolControler ( req,res ) {
+export async function poolController ( req,res ) {
 
     const pool = req.body;
 
