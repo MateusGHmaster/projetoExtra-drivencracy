@@ -1,24 +1,41 @@
-import { database } from '../mongoDb';
+import { ObjectId } from 'mongodb';
+import dayjs from 'dayjs';
+import { database } from '../mongoDb.js';
 
 export async function poolController ( req,res ) {
 
-    const pool = req.body;
+    const { title, expireAt } = req.body;
+
+    let expires = expireAt;
 
     try {
 
-        const inputPool = await database.collection('pools').insertOne(pool);
+        const checkPool = await database.collection('pools').findOne({ title });
 
-        if (!inputPool) {
 
-            return res.sendStatus(422);
+        if (expires === '') {
+
+            expires = dayjs().add(30, 'day').format('YYYY-MM-DD HH:mm');
 
         }
 
-        return sendStatus(201);
+        if (!checkPool) {
+
+            await database.collection('pools').insertOne({
+    
+                id: ObjectId(),
+                title,
+                expireAt: expires
+    
+            }); 
+
+        }
+
+        return res.sendStatus(201);
 
     } catch (e) {
 
-        console.log(e);
+        return res.status(500).send(e);
 
     }
 

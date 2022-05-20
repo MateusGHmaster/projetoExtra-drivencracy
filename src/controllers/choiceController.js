@@ -17,8 +17,7 @@ export async function choiceController(req, res) {
 
         }
 
-        /* if (title === ) */
-
+        const newPool = await database.collections('choices').insertOne({ poolId: poolId._id });
 
         if (dayjs().isAfter(expireAt.date)) {
 

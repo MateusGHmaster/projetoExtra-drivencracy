@@ -1,5 +1,5 @@
 import { database } from '../mongoDb';
-import poolSchema from '../schemas/poolSchema';
+import poolSchema from '../schemas/poolSchema.js';
 import dayjs from 'dayjs';
 
 export async function voteController ( req,res ) {

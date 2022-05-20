@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { choiceController } from '../controllers/choiceController.js';
-import { validChoiceSchema } from '../middlewares/validChoiceSchema.js';
+import validChoiceSchema from '../middlewares/validChoiceSchema.js';
 
 const choiceRouter = Router();
 

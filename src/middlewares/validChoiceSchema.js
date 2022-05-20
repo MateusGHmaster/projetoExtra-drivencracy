@@ -1,4 +1,4 @@
-import choiceSchema from '../schemas/choiceSchema';
+import choiceSchema from '../schemas/choiceSchema.js';
 
 export default function validChoicelSchema (req, res, next) {
 
