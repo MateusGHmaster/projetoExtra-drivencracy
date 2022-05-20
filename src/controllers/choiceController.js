@@ -2,26 +2,53 @@ import { database } from '../mongoDb.js';
 import choiceSchema from '../schemas/choiceSchema.js';
 import dayjs from 'dayjs';
 
-export async function choiceController(req, res) {
+export async function choiceGetController(req, res) {
 
-    const { title, poolId  } = req.body;
+    const { _id } = req.body;
+
+    try {
+        
+        const choices = await database.collection('choices').find({ _id }).toArray();
+
+        return res.send(choices);
+
+    } catch (e) {
+
+        return res.status(500).send(e);
+
+    }
+
+}
+
+export async function choicePostController(req, res) {
+
+    const { _id, title  } = req.body;
 
     try {
 
-        const choice = await database.collection('choices').findOne({ poolId });
+        const choice = await database.collection('choices').findOne({ _id });
+        const choiceTitle = await database.collection('choices').findOne({ title });
 
         if (choice) {
 
-            console.log(choice);
             return res.sendStatus(404);
 
-        }
+        } 
+        
+        if (!choiceTitle){
 
-        const newPool = await database.collections('choices').insertOne({ poolId: poolId._id });
+            await database.collection('choices').insertOne({
+    
+                title,
+                poolId: _id
+    
+            });
 
-        if (dayjs().isAfter(expireAt.date)) {
+        } 
+        
+        if (choiceTitle) {
 
-            return res.sendStatus(403);
+            return res.sendStatus(409);
 
         }
 
