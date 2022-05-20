@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { poolController } from '../controllers/poolController.js';
+import { poolPostController, poolGetController } from '../controllers/poolController.js';
 import validPoolSchema from '../middlewares/validPoolSchema.js';
 
 const poolRouter = Router();
 
-poolRouter.post('/poll', validPoolSchema, poolController);
-poolRouter.get('/poll', poolController);
+poolRouter.post('/poll', validPoolSchema, poolPostController);
+poolRouter.get('/poll', poolGetController);
 
 export default poolRouter;

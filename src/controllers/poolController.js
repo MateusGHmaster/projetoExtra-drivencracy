@@ -2,7 +2,23 @@ import { ObjectId } from 'mongodb';
 import dayjs from 'dayjs';
 import { database } from '../mongoDb.js';
 
-export async function poolController ( req,res ) {
+export async function poolGetController ( req,res ) {
+    
+    try {
+        
+        const pools = await database.collection('pools').find().toArray();
+
+        return res.send(pools);
+
+    } catch (e) {
+
+        return res.status(500).send(e);
+
+    }
+
+}
+
+export async function poolPostController ( req,res ) {
 
     const { title, expireAt } = req.body;
 
@@ -23,7 +39,6 @@ export async function poolController ( req,res ) {
 
             await database.collection('pools').insertOne({
     
-                id: ObjectId(),
                 title,
                 expireAt: expires
     
