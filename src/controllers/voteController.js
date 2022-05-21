@@ -1,22 +1,24 @@
 import { database } from '../mongoDb';
-import poolSchema from '../schemas/poolSchema.js';
-import dayjs from 'dayjs';
 
 export async function voteController ( req,res ) {
 
+    const { _id } = req.params;
+    
+    const voted = 0;
+
     try {
 
-        const vote = await database.collection('votes').findOne(vote);
+        const vote = await database.collection('votes').findOne({ _id });
 
         if (!vote) {
 
             return res.sendStatus(404);
 
-        }
+        } else {
 
-        if (dayjs().isAfter(expireAt.date)) {
+            voted += 1;
 
-            return res.sendStatus(403);
+            await database.collection('votes').updateOne({ votes: voted }); 
 
         }
 
